@@ -1,0 +1,37 @@
+# ===========================================
+# Dépendances (installées via composer install)
+# ===========================================
+/vendor/
+
+# ===========================================
+# Configuration sensible (mots de passe !)
+# ===========================================
+/config/database.php
+
+# ===========================================
+# IDE et éditeurs
+# ===========================================
+/.vscode/
+/.idea/
+*.sublime-project
+*.sublime-workspace
+
+# ===========================================
+# Système d'exploitation
+# ===========================================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ===========================================
+# Fichiers uploadés par les utilisateurs
+# ===========================================
+/public/uploads/*
+!/public/uploads/.gitkeep
+
+# ===========================================
+# Logs et cache
+# ===========================================
+*.log
+/cache/
+/tmp/

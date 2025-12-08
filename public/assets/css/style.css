@@ -1,0 +1,239 @@
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #fffe55 #f8f9fa;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+a:hover {
+  color: inherit;
+}
+
+a abbr {
+  cursor: pointer !important;
+}
+
+button > abbr {
+  cursor: pointer !important;
+}
+
+@media (max-width: 480px) {
+  .single-project__next #previous {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .single-project__next #next {
+    display: none;
+  }
+}
+
+
+/*=======================
+header
+=========================*/
+
+
+.header__logo {
+  gap: 20px;
+}
+
+@media (max-width: 575px) {
+  .header__logo img {
+    width: 32px;
+    height: auto;
+  }
+}
+
+a:hover {
+  color: inherit;
+}
+
+.logo #logo-nom {
+  color: #000000;
+  font-size: 24px;
+  font-weight: 600;
+  font-family: "Neue Montreal", "Arial", sans-serif,
+}
+
+.logo #logo-nom span {
+  font-style: italic;
+}
+
+@media screen and (max-width: 1199px) {
+  .logo #logo-nom {
+    display: none;
+  }
+}
+
+.is-fixed .logo #logo-nom {
+  
+  /* Masque sans supprimer l’espace */
+  visibility: hidden;
+
+  /* Désactive le clic */
+  pointer-events: none;
+}
+
+.noir_et_blanc {
+  filter: grayscale(1);
+}
+
+
+/*=======================
+page about 
+=========================*/
+
+
+.presentation-layout {
+  padding-top: 100px;
+}
+
+.stack-logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 120px;
+  height: auto;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 767px)  {
+  .stack-logo {
+    width: 96px;
+  }
+}
+
+.about-logo {
+  margin: 100px 0;
+  justify-content: space-between;
+}
+
+.title-cv {
+  font-size: 60px;
+  font-weight: 500;
+  line-height: 1;
+  color: #000000;
+  text-transform: uppercase;
+}
+
+
+.cv-layout {
+  width: 390px;
+  height: 550px;
+}
+
+.map-bordeaux img {
+  margin-top: 80px;
+  width: 100%;
+}
+
+
+/*======================
+form
+========================*/
+
+
+.grecaptcha-badge {
+  z-index: 1 !important;
+}
+
+textarea {
+  white-space: pre-line; /* Évite les espaces vides en début de texte */
+}
+
+
+/*======================
+page login
+========================*/
+
+
+.login-layout {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 200px;;
+}
+
+
+/*=======================
+footer
+=========================*/
+
+
+footer .logo-follow {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: revert;
+}
+
+.mobile-canvas__phone img {
+  gap: 20px;
+}
+
+.footer__legal-link {
+  position: relative;
+  font-size: 17px;
+  line-height: 1.5;
+  color: #000000;
+}
+
+.footer__legal-link::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #000000;
+  -webkit-transition: -webkit-transform 0.3s ease;
+  transition: -webkit-transform 0.3s ease;
+  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, -webkit-transform 0.3s ease;
+  -webkit-transform: scale(0, 1);
+          transform: scale(0, 1);
+}
+
+.footer__legal-link:focus {
+  outline: none;
+}
+
+@media (min-width: 992px) {
+  .footer__legal-link:hover::before, .footer__legal-link:focus::before {
+    -webkit-transform: scale(1, 1);
+            transform: scale(1, 1);
+  }
+}
+
+/*======================================================================
+page legal (politique de confidentialité, plan du site, mentions légales)
+========================================================================*/
+
+
+.container-legal {
+  padding: 55px 80px 100px;
+}
+
+.container-legal h1 {
+  padding-bottom: 40px;
+}
+
+.container-legal li {
+  list-style: none;
+}
