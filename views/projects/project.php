@@ -105,21 +105,23 @@ $description_page = isset($project['description']) ? $project['description'] : '
     </section>
     <div class="single-project__next" data-aos="fade-up">
 
-      <div>      
-        <a href="">
-          <svg width="104" height="86" style="transform: rotate(180deg);" class="arrow-left">
-            <use xlink:href="#arrow-right"></use>
-          </svg>
-          <abbr id="previous" title="Précédent">Préc</abbr>
-        </a>
-      </div>
-      <div>
-        <a href="">
-          <abbr id="next" title="Suivant">Suiv</abbr>
-          <svg width="104" height="86" class="arrow-right">
-            <use xlink:href="#arrow-right"></use>
-          </svg>
-        </a>
+      <div class="single-project__next" data-aos="fade-up" style="display: flex; justify-content: space-between; width: 100%;">
+        <div>
+          <a href="<?= $router->generate('project', ['slug' => $prevProject['slug']]) ?>">
+            <svg width="104" height="86" style="transform: rotate(180deg);" class="arrow-left">
+              <use xlink:href="#arrow-right"></use>
+            </svg>
+            <abbr id="previous" title="Précédent">Préc</abbr>
+          </a>
+        </div>
+        <div>
+          <a href="<?= $router->generate('project', ['slug' => $nextProject['slug']]) ?>">
+            <abbr id="next" title="Suivant">Suiv</abbr>
+            <svg width="104" height="86" class="arrow-right">
+              <use xlink:href="#arrow-right"></use>
+            </svg>
+          </a>
+        </div>
       </div>
 
     </div>

@@ -62,7 +62,7 @@ class AdminController extends Controller
 
         // Instancier le modèle Project
         $projectModel = new Project();
-        
+
         // Récupérer les projets via la méthode getProjectsWithImages
         $projects = $projectModel->getProjectsWithImages();
 
@@ -101,7 +101,7 @@ class AdminController extends Controller
             exit;
         }
 
-        if ( $id == '' ) {
+        if ($id == '') {
             header('Location: ' . $this->router->generate('admin_dashboard'));
             exit;
         }
@@ -125,14 +125,14 @@ class AdminController extends Controller
             exit;
         }
 
-        if ( $id == '' ) {
+        if ($id == '') {
             header('Location: ' . $this->router->generate('admin_dashboard'));
             exit;
         }
 
         $this->loadModel('Project');
         $this->Project->newDetail($id);
-        
+
         header('Location: ' . $this->router->generate('edit_project', ['id' => $id]));
         exit;
     }
@@ -145,14 +145,14 @@ class AdminController extends Controller
             exit;
         }
 
-        if ( $id == '' ) {
+        if ($id == '') {
             header('Location: ' . $this->router->generate('admin_dashboard'));
             exit;
         }
 
         $this->loadModel('Project');
         $this->Project->newSavoirFaire($id);
-        
+
         header('Location: ' . $this->router->generate('edit_project', ['id' => $id]));
         exit;
     }
@@ -165,7 +165,7 @@ class AdminController extends Controller
             exit;
         }
 
-        if ( $id == '' ) {
+        if ($id == '') {
             header('Location: ' . $this->router->generate('admin_dashboard'));
             exit;
         }
@@ -173,7 +173,7 @@ class AdminController extends Controller
         $this->loadModel('Project');
         $project_id = $this->Project->deleteDetail($id);
 
-        
+
         header('Location: ' . $this->router->generate('edit_project', ['id' => $project_id]));
         exit;
     }
@@ -186,7 +186,7 @@ class AdminController extends Controller
             exit;
         }
 
-        if ( $id == '' ) {
+        if ($id == '') {
             header('Location: ' . $this->router->generate('admin_dashboard'));
             exit;
         }
@@ -194,7 +194,7 @@ class AdminController extends Controller
         $this->loadModel('Project');
         $project_id = $this->Project->deleteSavoirFaire($id);
 
-        
+
         header('Location: ' . $this->router->generate('edit_project', ['id' => $project_id]));
         exit;
     }
@@ -208,24 +208,31 @@ class AdminController extends Controller
             exit;
         }
 
-        if ( $id == '' ) {
+        if ($id == '') {
             header('Location: ' . $this->router->generate('admin_dashboard'));
             exit;
         }
 
-        foreach($_POST as $key => $value) {
-          $$key = $value;
-          $_SESSION[$key] = $value;
+        foreach ($_POST as $key => $value) {
+            $$key = $value;
+            $_SESSION[$key] = $value;
         }
+
+        $thumbnail_old_details = $thumbnail_old_details ?? '';
+        $thumbnail_old_savoir_faire = $thumbnail_old_savoir_faire ?? '';
+        $content_savoir_faire = $content_savoir_faire ?? '';
+        $categories = $categories ?? [];
+        $details = $details ?? [];
+        $savoir_faire = $savoir_faire ?? [];
 
         // Initialise la variable $error avec une valeur par défaut
         $error = false;
-        if ( empty($title) ) $error = "Le titre est obligatoire";
-        else if ( empty($slug) ) $error = "Le slug est obligatoire";
-        else if ( empty($description) ) $error = "La description est obligatoire";
-        else if ( empty($content) ) $error = "Le contenu est obligatoire";
+        if (empty($title)) $error = "Le titre est obligatoire";
+        else if (empty($slug)) $error = "Le slug est obligatoire";
+        else if (empty($description)) $error = "La description est obligatoire";
+        else if (empty($content)) $error = "Le contenu est obligatoire";
 
-        if ( $error ) {
+        if ($error) {
             $_SESSION['error'] = $error;
             header('Location: ' . $this->router->generate('edit_project', ['id' => $id]));
             exit;
@@ -246,8 +253,6 @@ class AdminController extends Controller
                 header('Location: ' . $this->router->generate('edit_project', ['id' => $id]));
                 exit;
             }
-            $projectModel = new Project();
-            $projectModel->saveImage($id, $filePath);
         }
 
         // Gestion du fichier détails
@@ -289,31 +294,36 @@ class AdminController extends Controller
         // Sauvegarde en base de données
         $projectModel = new Project();
         $id = $projectModel->saveProject($id, $title, $slug, $description, $content, $content_savoir_faire, $filePath, $filePathDetails, $filePathSavoirFaire);
+
+        // Sauvegarder l'image seulement si un nouveau fichier a été uploadé
+        if (!empty($_FILES['thumbnail']['name'])) {
+            $projectModel->saveImage($id, $filePath);
+        }
+
         $projectModel->updateCategories($id, $categories);
 
-        foreach( $details as $detail_id ) {
+        foreach ($details as $detail_id) {
             $label_field = 'label_' . $detail_id;
             $value_field = 'value_' . $detail_id;
             $sort_order_field = 'sort_order_' . $detail_id;
             $projectModel->updateDetail($detail_id, $id, $$label_field, $$value_field, $$sort_order_field);
         }
 
-        foreach( $savoir_faire as $savoir_faire_id ) {
+        foreach ($savoir_faire as $savoir_faire_id) {
             $value_field = 'savoir_faire_value_' . $savoir_faire_id;
             $sort_order_field = 'savoir_faire_sort_order_' . $savoir_faire_id;
             $projectModel->updateSavoirFaire($savoir_faire_id, $id, $$value_field, $$sort_order_field);
         }
 
         $_SESSION['success'] = "Le projet a bien été enregistré.";
-        unset( $_SESSION['title'] );
-        unset( $_SESSION['slug'] );
-        unset( $_SESSION['description'] );
-        unset( $_SESSION['content'] );
-        unset( $_SESSION['content_savoir_faire'] );
-        
+        unset($_SESSION['title']);
+        unset($_SESSION['slug']);
+        unset($_SESSION['description']);
+        unset($_SESSION['content']);
+        unset($_SESSION['content_savoir_faire']);
+
         header('Location: ' . $this->router->generate('admin_dashboard'));
         exit;
-
     }
 
 
@@ -325,7 +335,7 @@ class AdminController extends Controller
             exit;
         }
 
-        if ( $id == '' ) {
+        if ($id == '') {
             header('Location: ' . $this->router->generate('admin_dashboard'));
             exit;
         }
@@ -334,10 +344,9 @@ class AdminController extends Controller
         $projectModel = new Project();
         $projectModel->deleteProject($id);
         $_SESSION['success'] = "Le projet a bien été supprimé.";
-        
+
         header('Location: ' . $this->router->generate('admin_dashboard'));
         exit;
-
     }
 
 
@@ -349,7 +358,7 @@ class AdminController extends Controller
             exit;
         }
 
-        if ( $id == '' ) {
+        if ($id == '') {
             header('Location: ' . $this->router->generate('admin_dashboard'));
             exit;
         }
@@ -358,10 +367,9 @@ class AdminController extends Controller
         $projectModel = new Project();
         $projectModel->deleteThumbnail($id);
         $_SESSION['success'] = "Le visuel a bien été supprimé.";
-        
+
         header('Location: ' . $this->router->generate('edit_project', ['id' => $id]));
         exit;
-
     }
 
 
@@ -373,7 +381,7 @@ class AdminController extends Controller
             exit;
         }
 
-        if ( $id == '' ) {
+        if ($id == '') {
             header('Location: ' . $this->router->generate('admin_dashboard'));
             exit;
         }
@@ -382,10 +390,9 @@ class AdminController extends Controller
         $projectModel = new Project();
         $projectModel->deleteThumbnailDetails($id);
         $_SESSION['success'] = "Le visuel du bloc détails a bien été supprimé.";
-        
+
         header('Location: ' . $this->router->generate('edit_project', ['id' => $id]));
         exit;
-
     }
 
 
@@ -397,7 +404,7 @@ class AdminController extends Controller
             exit;
         }
 
-        if ( $id == '' ) {
+        if ($id == '') {
             header('Location: ' . $this->router->generate('admin_dashboard'));
             exit;
         }
@@ -406,9 +413,8 @@ class AdminController extends Controller
         $projectModel = new Project();
         $projectModel->deleteThumbnailSavoirFaire($id);
         $_SESSION['success'] = "Le visuel du bloc savoir-faire a bien été supprimé.";
-        
+
         header('Location: ' . $this->router->generate('edit_project', ['id' => $id]));
         exit;
-
     }
 }

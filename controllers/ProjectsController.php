@@ -6,7 +6,7 @@ use App\Controller;
 
 class ProjectsController extends Controller
 {
-    
+
     // Définition de la propriété Project
     protected $Project;
 
@@ -40,7 +40,23 @@ class ProjectsController extends Controller
         // On stocke le projet dans $project
         $project = $this->Project->findBySlug($slug);
 
+        // Récupérer tous les projets pour navigation
+        $allProjects = $this->Project->getProjectsWithImages();
+        $slugs = array_keys($allProjects);
+        $currentIndex = array_search($slug, $slugs);
+        $totalProjects = count($slugs);
+
+        // Projet précédent (boucle vers le dernier si on est au premier)
+        $prevIndex = ($currentIndex - 1 + $totalProjects) % $totalProjects;
+        $prevSlug = $slugs[$prevIndex];
+        $prevProject = $allProjects[$prevSlug];
+
+        // Projet suivant (boucle vers le premier si on est au dernier)
+        $nextIndex = ($currentIndex + 1) % $totalProjects;
+        $nextSlug = $slugs[$nextIndex];
+        $nextProject = $allProjects[$nextSlug];
+
         // On envoie les données à la vue project.php
-        $this->render('project', compact('project'));
+        $this->render('project', compact('project', 'prevProject', 'nextProject'));
     }
 }
